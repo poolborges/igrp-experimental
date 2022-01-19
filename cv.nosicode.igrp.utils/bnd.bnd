@@ -1,0 +1,16 @@
+
+
+# TODO - MUST validate the generate manifest  
+Import-Package: \
+    com.sun.tools.javac*
+
+# TODO - SHOULD export only pages 
+Export-Package: \
+    nosi.core.webapp.helpers.*, \
+    nosi.core.webapp.utils.*
+    
+
+# Process compile-time OSGI annotations
+-dsannotations: *
+-metatype: *
+-metatypeannotations: *

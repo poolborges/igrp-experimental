@@ -1,0 +1,171 @@
+////
+ *******************************************************************************
+ * Copyright 2020 Paulo Borges(poolborges)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************
+////
+[[doc]]
+= IGRP v202007 Analise
+:author: Paulo Borges
+:copyright: Paulo Borges
+:revnumber: 
+:revdate: {docdatetime}
+:encoding: UTF-8
+:lang: pt_PT
+:version-label!:
+:Date: 2020-07-31
+:Revision: 1
+:icons:
+:source-highlighter: highlightjs
+:highlightjs-theme: solarized_dark
+
+:Edited: 2022-01-19
+:Generated: {localdate} {localtime}
+
+
+[[doc.summary]]
+== Summary
+
+
+== Questões 
+
+
+* Q1 - Qual é a licença das varias partes que constituem o framework IGRP
+
+
+== IGRP-Web 
+
+igrpweb is a integrated platform created and developed by NOSi targeted at e-Govermment people, developers ans system admins. 
+Its core is extremely lightweight and based on simple concepts. 
+
+
+== IGRP-Studio 
+
+Elementos
+
+* Aplication Builder
+* Business Process Management (BMN)
+* Report Builder
+* Java Code Editor
+
+Divisão em Modulo 
+
+* Builder (Compiler, Maven,...)
+* UI Builder
+
+
+== IGRP-Web Web Application Template
+
+
+License: Apache License
+
+== Slip IGRP Jar 
+
+
+Packages 
+
+. nosi.base
+. nosi.core 
+.. nosi.core.X
+.. nosi.core.webapp
+... activity, bpmn, compiler, database, datasource, 
+... export, helpers, import_export_v2, security, 
+... uploadfile, webservices
+. nosi.webapps.igrp 
+.. dao, pages, services
+. nosi.webapps.igrp_studio
+. nosi.webapps.tutorial
+
+
+== Nova Estrutura: Sugestão S01
+
+
+Para falar desde modulo, irei assumir o seguinte: 
+
+* multi-camadas (ex: Acesso a dados, Negocio, Apresentação), podem ver vertical ou horizal (cross boundary)
+* Separar o necessario em runtime do necessario para desenvolvimento.
+** reduzir api que o developer devera preocupar.
+** facilitar migração p
+
+
+O ficheiro IGRP.jar devera ser divido em varios modulos (.jar) sugestão: 
+
+* igrp-core - Contem codigo que não depende que devera depender o minimo
+** Pode ser divido ainda de varias partes (ex: runtime, api)
+* igrp-web - define as interfaces e classes necessarias para implementar o processar os pedidos http e depende da API do HttpServlet. Aqui devera fornecer codigo base implementado via padrão FrontController, MVC
+* igrp-webui (GUI) define os varios elementos para criação de interface do utilizador 
+
+
+=== Como Implementar a nova estrutura
+
+.Split nosi.base
+----
+>mkdir igrp-base
+>cd igrp-base
+
+igrp-base>jar -xf ..\IGRP.jar nosi/base
+igrp-base>jar -cf ..\igrp-base.jar .
+----
+
+.Split nosi.core
+----
+>mkdir igrp-core
+>cd igrp-core
+
+igrp-core>jar -xf ..\IGRP.jar nosi/core
+igrp-core>jar -cf ..\igrp-core.jar .
+----
+
+.Split nosi.webapps.igrp
+----
+>mkdir igrp-webapps-igrp
+>cd igrp-webapps-igrpstudio
+
+igrp-webapps-igrp>jar -xf ..\IGRP.jar nosi/webapps/igrp
+igrp-webapps-igrp>jar -cf ..\igrp-webapps-igrp.jar .
+----
+
+
+.Split nosi.webapps.igrp_studio
+----
+>mkdir igrp-webapps-igrpstudio
+>cd igrp-webapps-igrpstudio
+
+igrp-webapps-igrpstudio>jar -xf ..\IGRP.jar nosi/webapps/igrp_studio
+igrp-webapps-igrpstudio>jar -cf ..\igrp-webapps-igrpstudio.jar .
+----
+
+
+.Split nosi.webapps.tutorial
+----
+>mkdir igrp-webapps-tutorial
+>cd igrp-webapps-tutorial
+
+igrp-webapps-tutorial>jar -xf ..\IGRP.jar nosi/webapps/tutorial
+igrp-webapps-tutorial>jar -cf ..\igrp-webapps-tutorial.jar .
+----
+
+
+
+== Utils
+
+
+.Generate 
+----
+dot -Tpng queue.dot -oqueue.png
+
+dot -Tpng {NOSCODE_SRC}/NOSiCode-CV/IGRP-Java-Template-Eclipse/IGRP-Template/target/tattletale/graphviz/IGRP.jar/IGRP.jar-package.dot -oigrp_2020-07-04_packages.png
+----
+
+

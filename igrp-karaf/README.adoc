@@ -1,0 +1,56 @@
+// Global settings
+:ascii-ids:
+:encoding: UTF-8
+:lang: pt_PT
+:icons: font
+:toc: left
+:toclevels: 3
+:numbered:
+:stem:
+
+[[doc]]
+= IGRP-Karaf
+:author: Copyright (c) 2019-2019 Paulo Borges.
+:revnumber: {app-product-name} {app-version}
+:revdate: {last-update-label} {docdatetime}
+:version-label!:
+
+
+toc::[]
+
+[[doc.summary]]
+== Summary
+
+TODO...
+
+
+== How to analisys generate bundle
+
+.Using tattletale
+----
+java -Xmx512m -cp "dev_tools/*:./*" org.jboss.tattletale.Main <DIRECTORY_TO_SEARCH> <DIRECTORY_FOR_RESULT> 
+
+
+java -Xmx512m -cp "dev_tools/*:./*" org.jboss.tattletale.Main ./target ./tattletale-report
+
+
+java -Xmx512m -cp "dev_tools/*:./*" org.jboss.tattletale.Main <DIRECTORY_TO_SEARCH> <DIRECTORY_FOR_RESULT> 
+
+java -Xmx512m -cp "dev_tools/*:./*" org.jboss.tattletale.Main ./target ./tattletale-report
+
+java -Xmx512m -jar tattletale.jar [-exclude=<excludes>] <input-directory> <output-directory>
+
+java -Xmx512m -jar tattletale.jar ./target ./tattletale-report
+
+
+java -Xmx512m -jar tattletale.jar myApp.jar#yourApp.war#amazingApp.ear report
+----
+
+.dot
+----
+dot -Tpng sondagsmr-runner-1.0.0-SNAPSHOT.jar-package.dot > sondagsmr-runner-1.0.0-SNAPSHOT.jar-package.png
+----
+
+== Reference
+
+TODO...

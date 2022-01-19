@@ -1,0 +1,316 @@
+////
+ *******************************************************************************
+ * Copyright 2020 Paulo Borges(poolborges)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************
+////
+=  IGRP-web-MVC
+
+== IGRP WebFramework 
+
+* cv.nosicode.igrpframework.web
+** Request, Response
+** cv.nosicode.igrpframework.mcv.
+
+== What 
+
+* provide a comprehensive suite of class utilities.
+* ModelAndView
+* Handler - ModelAndViewRender
+* Render 
+* HandlerExecutionChain
+* HandlerAdapter - SimpleControllerHandlerAdapter, ServletHandlerAdapter, IgrpHandlerAdapter
+* Router 
+    {Application appName, Controller pageName, Action actionName}
+    Application is compose by a set of page. Application is a jar file 
+    Page is compose by one or more Action. Page is a implementation of Controller 
+    Action is a single method 
+** /webapps?r=appName/pageName/actionName&var1=value1&var2=value2&var3=value3
+** /dispatcher/appName/pageName/actionName?var1=value1&var2=value2&var3=value3
+** /tenantdispatcher/tenantid/applicationId/controller/action?var1=value1&var2=value2&var3=value3 
+** /manager/x
+** /webide/x
+
+----
+public class IgrpDispatcher 
+
+public class IgrpServlet extends HttpServlet {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    	Igrp.getInstance().init(this, request, response).run();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.processRequest(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}
+
+public class Igrp{
+
+    // Inicialize the web app components
+	public Igrp init(IgrpServlet servlet, HttpServletRequest request, HttpServletResponse response){
+        this.servlet = servlet;
+        this.request = request;
+        this.response = response;
+        
+        this.basePath = this.request.getContextPath();
+        this.baseRoute = this.request.getServletPath();
+        this.homeUrl = "igrp/home/index";
+        
+        // init of others configuration
+        
+        // load app configuration
+        this.loadAppConfig();
+        this.flashMessage = new FlashMessage(); // Flash Message instance
+        
+        // User component (Identity)
+        this.user = new User();
+        this.user.init();
+        return this;
+    }
+
+
+    public void run() throws IOException{ // run the web app 	
+		Config.configurationApp();
+		if(!this.die){
+			this.runController();
+		}
+		this.exit();
+	}
+
+    private runController(){}
+        Controller.initControllerNRunAction();
+    }
+}
+
+
+org/springframework/web/portlet/mvc/SimpleControllerHandlerAdapter.html
+Aware, PortletContextAware, HandlerAdapter
+
+package org.springframework.web.servlet.mvc;
+
+public class SimpleControllerHandlerAdapter implements HandlerAdapter{
+
+}
+
+package org.springframework.web.servlet.handler;
+public class SimpleServletHandlerAdapter implements HandlerAdapter{
+
+}
+
+public IgrpClassPathControllerScanner implements scanner<>{
+
+}
+
+package cv.nosicode.igrp.integration.spring.handler;
+public class IgrpHandlerAdapter implements HandlerAdapter{
+
+}
+
+package org.springframework.core.io;
+
+public interface Resource extends InputStreamSource {
+}
+
+public abstract class  AbstractResource implements Resource {
+}
+
+public abstract class  AbstractFileResolvingResource extends AbstractResource {}
+
+/**
+ * Strategy interface for loading resources (e.. class path or file system resources). 
+ * An org.springframework.context.ApplicationContext is required to provide this functionality, plus extended 
+ */
+public interface ResourceLoader {
+    String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
+    String CLASSPATH_URL_PREFIX = "classpath:"; //ResourceUtils.CLASSPATH_URL_PREFIX;
+
+    Resource getResource(String location);
+    ClassLoader getClassLoader();
+}
+
+/**
+ * Strategy interface for resolving a location pattern (for example, an Ant-style path pattern) into Resource objects.
+ */
+public interface ResourcePatternResolver extends ResourceLoader {
+    
+
+	Resource[] getResources(String locationPattern) throws IOException;
+    }
+}
+
+/**
+ * DefaultResourceLoader is a standalone implementation that is usable outside an ApplicationContext, 
+ * also used by ResourceEditor. 
+ */
+public class DefaultResourceLoader implements ResourceLoader {
+
+    public  DefaultResourceLoader() {
+        this.classLoader = ClassUtils.getDefaultClassLoader();
+    }
+}
+----
+
+* JBoss "vfs" protocol
+* Filesystem "file" protocol 
+* Classpath "classpath" protocol 
+* Git "git" protocol 
+* HTTO "http" protocol 
+
+
+----
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
+
+    try {
+        ModelAndView mv;
+        boolean errorView = false;
+
+        // check for Multipart
+        processedRequest = checkMultipart(request);
+
+        // Determine handler for the current request.
+        mappedHandler = getHandler(processedRequest, false);
+        if (mappedHandler == null || mappedHandler.getHandler() == null) {
+            noHandlerFound(processedRequest, response);
+            return;
+        }
+
+        // Apply preHandle methods of registered interceptors.
+        if(!preHandler(processedRequest, response, mappedHandler)){
+            interceptorFinishExecution(processedRequest, response);
+            return;
+        }
+
+        // Actually invoke the handler.
+        HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+        //Devera retornar uma interface Render invez de ModelAndView, ou seja, ModelAndViewRender
+        mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+        // Apply postHandler methods of registered interceptors.
+        if(postHandler(processedRequest, response, mappedHandler)){
+            interceptorFinishExecution(processedRequest, response);
+            return;
+        }
+
+        // Did the handler return a view to render?
+        if (mv != null && !mv.wasCleared()) {
+            render(mv, processedRequest, response);
+            if (errorView) {
+                WebUtils.clearErrorRequestAttributes(request);
+            }
+        }
+
+    }catch (Exception ex) {
+        //TODO doSomething before throws
+        throw ex;
+    }
+    finally {
+        // Clean up any resources used by a multipart request.
+        if (processedRequest != request) {
+            cleanupMultipart(processedRequest);
+        }
+    }
+}
+
+
+private boolean preHandler(HandlerExecutionChain mappedHandler, HttpServletRequest processedRequest, HttpServletResponse response){
+    HandlerInterceptor[] interceptors = mappedHandler.getInterceptors();
+
+    if (interceptors != null) {
+        for (int i = 0; i < interceptors.length; i++) {
+            HandlerInterceptor interceptor = interceptors[i];
+            if (!interceptor.preHandle(processedRequest, response, mappedHandler.getHandler())) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+private boolean postHandle(HandlerExecutionChain mappedHandler, HttpServletRequest processedRequest, HttpServletResponse response){
+    
+    HandlerInterceptor[] interceptors = mappedHandler.getInterceptors();
+
+    if (interceptors != null) {
+        for (int i = 0; i < interceptors.length; i++) {
+            HandlerInterceptor interceptor = interceptors[i];
+            if (!interceptor.postHandle(processedRequest, response, mappedHandler.getHandler())) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+----
+
+
+== CDI Interceptors and Decorators
+
+* @AroundInvoke
+* @PostConstruct
+* @PreDestroy, @PrePassivate, @PostActivate
+
+----
+import javax.interceptor.InterceptorBinding;
+import java.lang.annotation.Inherited;
+
+@Inherited
+@InterceptorBinding
+@Retention(RUNTIME)
+@Target({METHOD, TYPE})
+public @interface Logged {
+}
+
+
+@Logged 
+@Interceptor implements Serializable {
+public class LoggedInterceptor{
+    public LoggedInterceptor() {
+    }
+
+    @AroundInvoke
+    public Object logMethodEntry(InvocationContext invocationContext) throws Exception {
+        System.out.println("Entering method: "
+                + invocationContext.getMethod().getName() + " in class "
+                + invocationContext.getMethod().getDeclaringClass().getName());
+
+        return invocationContext.proceed();
+    }
+}
+
+@Logged
+@SessionScoped
+public class PaymentHandler implements Serializable {
+    @Logged
+    public String pay() {...}
+
+    @Logged
+    public void reset() {...}
+}
+----
+
+
+== Springframework Interceptors 
+
+...
+
+== JAX-RS Interceptors 
+
+...

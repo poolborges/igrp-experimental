@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM--P ecj package</actionName>
+            <displayName>-P ecj package</displayName>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>ecj</activatedProfile>
+            </activatedProfiles>
+        </action>
+    </actions>

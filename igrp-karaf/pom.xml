@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>IGRP-Template</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>igrp-karaf</artifactId>
+    <packaging>bundle</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <igrp.version>2.3</igrp.version>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>cv.nosi.igrp</groupId>
+            <artifactId>igrp</artifactId>
+            <version>180704</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.5.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>true</addMavenDescriptor>
+                    </archive>
+                    <supportedProjectTypes>
+                        <supportedProjectType>bundle</supportedProjectType>
+                        <supportedProjectType>jar</supportedProjectType>
+                    </supportedProjectTypes>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Category>${project.groupId}</Bundle-Category>
+                        
+                        <Import-Package>
+                            !nosi.*, <!-- Exlu -->
+                            *
+                        </Import-Package>
+                        <Export-Package>
+                            nosi.base.*;version=${igrp.version},
+                            nosi.core.*;version=${igrp.version},
+                            nosi.webapps.*;version=${igrp.version},
+                            !nosi.igrp.interal.*;version=${igrp.version}, <!-- NOT USED YET -->
+                        </Export-Package>
+                        
+                        <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
+                        <Embed-Directory>lib</Embed-Directory>
+                        <Embed-Dependency>*;scope=compile|runtime;</Embed-Dependency>
+                        <Embed-Transitive>false</Embed-Transitive>
+                        <Embedded-Artifacts>!</Embedded-Artifacts> 
+                        
+                        
+                        <!-- Instruction for bnd to process SCR annotations -->
+                        <_dsannotations>*</_dsannotations>
+                        <!-- Instruction for bnd to process Meta annotations -->
+                        <_metatype>*</_metatype>
+                        <!-- Instruction for bnd to process Meta annotations -->
+                        <_metatypeannotations>*</_metatypeannotations>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>bundle-manifest</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.jboss.tattletale</groupId>
+                <artifactId>tattletale-maven</artifactId>
+                <!-- The version of the plugin you want to use -->
+                <version>1.1.0.Final</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- This is the location which will be scanned for generating tattletale reports
+                    --> 
+                    <source>${project.basedir}/src:${project.build.directory}</source>
+                    <!-- This is where the reports will be generated -->
+                    <destination>${project.build.directory}/tattletale-report</destination>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <name>igrp-karaf</name>
+</project>

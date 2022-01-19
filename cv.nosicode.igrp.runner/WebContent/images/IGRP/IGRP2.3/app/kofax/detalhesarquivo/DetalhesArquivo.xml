@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="images/IGRP/IGRP2.3/app/kofax/detalhesarquivo/DetalhesArquivo.xsl" type="text/xsl"?>
+<rows>
+    <site>
+        <welcome_note>Ola</welcome_note>
+        <footer_note>2011 - Copyright NOSI</footer_note>
+        <user_name>red-igrp</user_name>
+        <button type="specific">
+            <title>Sair</title>
+            <app>RED</app>
+            <page />
+            <link>#</link>
+            <target>_self</target>
+            <img>exit.png</img>
+        </button>
+    </site>
+    <page>DetalhesArquivo</page>
+    <app>kofax</app>
+    <plsql>
+        <action>index</action>
+        <package_instance></package_instance>
+        <package_db>nosi.webapps.kofax.pages</package_db>
+        <package_html>DetalhesArquivo</package_html>
+        <table_name></table_name>
+        <with_replace>false</with_replace>
+        <with_label>false</with_label>
+        <with_biztalk>false</with_biztalk>
+        <dynamic_menu>false</dynamic_menu>
+        <copy_menu>false</copy_menu>
+        <package_copy_db />
+        <package_copy_html />
+        <preserve_url>http://localhost:8080/IGRP/webapps?r=igrp/page/preserveUrl&amp;p_id=</preserve_url>
+    </plsql>
+    <content>
+        <title>Detalhes de Arquivo</title>
+        <iframe_1 type="iframe" xml-type="iframe" gen-type="container" gen-group="">
+            <fields>
+                <iframe_1_src name="p_iframe_1_src" type="text" maxlength="4000">
+                    <label>Iframe Source</label>
+                    <value>undefinedimages/IGRP/IGRP2.3/app/kofax/detalhesarquivo/DetalhesArquivo.xsl</value>
+                </iframe_1_src>
+            </fields>
+        </iframe_1>
+    </content>
+</rows>

@@ -1,0 +1,24 @@
+
+
+
+* https://maven.apache.org/resolver-archives/resolver-1.6.1/
+
+== Example 
+
+* https://gitbox.apache.org/repos/asf?p=maven-resolver.git;a=tree;f=maven-resolver-demos/maven-resolver-demo-snippets/src/main/java/org/apache/maven/resolver/examples
+
+
+== Transport 
+
+
+* File 
+* HTTP 
+* maven-resolver-transport-classpath
+* WAGON | maven-resolver-transport-wagon/  
+
+
+
+== Sync Context 
+
+* maven-resolver-synccontext-global
+* maven-resolver-synccontext-redisson

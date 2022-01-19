@@ -1,0 +1,71 @@
+= IGRP YANV (Yet Another New Version)
+
+:WARNING: EXPERIMENTAL 2018
+
+NEED
+
+* JDK8
+
+== Core IDEIAS
+
+* OSGi Enabled Framework 
+* Clean Graph of dependencies (inter package, class) 
+* Multi-module project: 
+** Core framework, 
+** Core Portal/App Manager
+** Core UIWidgets, 
+** WebBuilder/IDE
+* Interface/service based programming model 
+* Default Implementation of modules for Runtime enviroment
+* Extra modules for Development Enviroment: 
+** WebBuilder/WebIDE - Template/Skeleton projects(Set of Maven Archetype)
+** Embedded maven builder
+** Repository - Embedded git
+* Maven Artifact Distribution - Core(API, ...), Common, Runtime,
+
+
+== IDEIAS UI
+
+* webjar (css, js, image, ...)
+* Web Componenets (Migrate from xsl)
+* Server side rendering of XSL 2 HTML
+** (Maybe Browsers will remove xml/xsl processing)
+** https://developer.mozilla.org/en-US/docs/Web/API/XSLTProcessor/XSL_Transformations_in_Mozilla_FAQ
+** https://groups.google.com/a/chromium.org/g/blink-dev/c/zIg2KC7PyH0
+** https://bugs.chromium.org/p/chromium/issues/detail?id=514995
+* Saxon-JS
+** https://www.saxonica.com/saxon-js/release-notes.xml
+
+
+
+== Tools
+
+Tools e tecnicas usados na analise:
+
+* Grafo de dependencias: Classes, Pacotes, Jar
+* Diff Jar (Compara conteudo de 2 jar: classe, method) 
+* Diff XML
+* ab (apache benchmark)
+* Split Jar (Gerar Multiplos Jar)
+* VisualVM 
+* JDK MissionControl
+* docker, docker-compose
+
+
+== MISC
+
+.Bash Recursively Remove .DS_Store
+[source, bash]
+----
+find . -name '.DS_Store' -type f -delete
+----
+
+.Powershell Recursively Remove .DS_Store
+[source, ps1]
+----
+Get-ChildItem -recurse -filter .DS_STORE | Remove-Item -WhatIf
+----
+
+== Reference
+
+* ...

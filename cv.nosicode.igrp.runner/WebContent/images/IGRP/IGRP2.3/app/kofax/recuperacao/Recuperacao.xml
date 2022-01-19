@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="images/IGRP/IGRP2.3/app/kofax/recuperacao/Recuperacao.xsl" type="text/xsl"?>
+<rows>
+    <site>
+        <welcome_note>Ola</welcome_note>
+        <footer_note>2011 - Copyright NOSI</footer_note>
+        <user_name>red-igrp</user_name>
+        <button type="specific">
+            <title>Sair</title>
+            <app>RED</app>
+            <page />
+            <link>#</link>
+            <target>_self</target>
+            <img>exit.png</img>
+        </button>
+    </site>
+    <page>Recuperacao</page>
+    <app>kofax</app>
+    <plsql>
+        <action>index</action>
+        <package_instance></package_instance>
+        <package_db>nosi.webapps.kofax.pages</package_db>
+        <package_html>Recuperacao</package_html>
+        <table_name></table_name>
+        <with_replace>false</with_replace>
+        <with_label>false</with_label>
+        <with_biztalk>false</with_biztalk>
+        <dynamic_menu>false</dynamic_menu>
+        <copy_menu>false</copy_menu>
+        <package_copy_db />
+        <package_copy_html />
+        <preserve_url>http://localhost:8080/IGRP/webapps?r=igrp/page/preserveUrl&amp;p_id=</preserve_url>
+    </plsql>
+    <content>
+        <title>Recuperacao de Arquivo</title>
+        <toolsbar_1 type="toolsbar" xml-type="toolsbar" gen-type="menu" gen-group="">
+            <item type="specific" code="" rel="gravar">
+                <title>Gravar</title>
+                <app>kofax</app>
+                <page>ListaObjeto</page>
+                <link>index</link>
+                <target>submit_ajax</target>
+                <img>success|fa-save</img>
+                <parameter>undefinedimages/IGRP/IGRP2.3/app/kofax/listaobjeto/ListaObjeto.xsl</parameter>
+            </item>
+        </toolsbar_1>
+        <form_1 type="form" xml-type="form" gen-type="container" gen-group="">
+            <fields>
+                <identificacao name="p_identificacao" type="separator" maxlength="30" placeholder="" right="false">
+                    <label>Identificação</label>
+                </identificacao>
+                <tipo_objeto name="p_tipo_objeto" type="select" multiple="false" domain="" maxlength="30" required="true" change="true" disabled="false" right="false">
+                    <label>Tipo Objeto</label>
+                    <list>
+                        <option/>
+                        <option>
+                            <text>Option 1</text>
+                            <value>1</value>
+                        </option>
+                        <option>
+                            <text>Option 2</text>
+                            <value>2</value>
+                        </option>
+                        <option>
+                            <text>Option 3</text>
+                            <value>3</value>
+                        </option>
+                        <option>
+                            <text>Option 4</text>
+                            <value>4</value>
+                        </option>
+                    </list>
+                </tipo_objeto>
+                <data_de_registo name="p_data_de_registo" type="date" format="IGRP_datePicker" maxlength="30" required="true" change="false" readonly="false" disabled="false" placeholder="" right="false" class="default">
+                    <label>Data de registo</label>
+                    <value/>
+                </data_de_registo>
+                <descricao name="p_descricao" type="text" maxlength="100" required="false" change="false" readonly="false" disabled="false" placeholder="" right="false">
+                    <label>Descricao</label>
+                    <value>Officia sit amet laudantium amet</value>
+                </descricao>
+                <localizacao_fisica name="p_localizacao_fisica" type="separator" maxlength="30" placeholder="" right="false">
+                    <label>Localização Física</label>
+                </localizacao_fisica>
+                <estante name="p_estante" type="text" maxlength="30" required="false" change="false" readonly="false" disabled="false" placeholder="" right="false">
+                    <label>Estante</label>
+                    <value>Ut sed sit labore rem</value>
+                </estante>
+                <pasta name="p_pasta" type="text" maxlength="30" required="false" change="false" readonly="false" disabled="false" placeholder="" right="false">
+                    <label>Pasta</label>
+                    <value>Iste rem ut rem magna</value>
+                </pasta>
+                <livro name="p_livro" type="text" maxlength="30" required="false" change="false" readonly="false" disabled="false" placeholder="" right="false">
+                    <label>Livro</label>
+                    <value>Adipiscing officia mollit stra</value>
+                </livro>
+                <folha name="p_folha" type="text" maxlength="30" required="false" change="false" readonly="false" disabled="false" placeholder="" right="false">
+                    <label>Folha</label>
+                    <value>Consectetur sit voluptatem adi</value>
+                </folha>
+                <adicionar_ficheiro name="p_adicionar_ficheiro" type="separator" maxlength="30" placeholder="" right="false">
+                    <label>Adicionar Ficheiro</label>
+                </adicionar_ficheiro>
+                <imagem name="p_imagem" type="img" persist="true" img="" width="500" height="400" croppie="true" rounded="false" maxlength="30" placeholder="" right="false">
+                    <label>Imagem</label>
+                    <value/>
+                </imagem>
+                <hidden name="p_id" type="hidden" maxlength="30" tag="id"/>
+            </fields>
+        </form_1>
+        <formlist_1 type="formlist" xml-type="formlist" gen-clean="true" gen-type="container" gen-group="true">
+            <fields>
+                <campo name="p_campo" type="plaintext" maxlength="30" right="false" desc="true">
+                    <label>Campo</label>
+                </campo>
+                <valor name="p_valor" type="text" maxlength="200" required="false" change="false" readonly="false" disabled="false" placeholder="" right="false" desc="true">
+                    <label>Valor</label>
+                </valor>
+            </fields>
+            <table>
+                <value>
+                    <row>
+                        <campo name="p_campo" desc="true">Elit laudantium labore adipisc</campo>
+                        <campo_desc name="p_campo_desc">Elit laudantium labore adipisc</campo_desc>
+                        <valor name="p_valor" desc="true">Sit anim laudantium perspiciatis doloremque</valor>
+                        <valor_desc name="p_valor_desc">Sit anim laudantium perspiciatis doloremque</valor_desc>
+                    </row>
+                    <row>
+                        <campo name="p_campo" desc="true">Voluptatem sed amet elit adipi</campo>
+                        <campo_desc name="p_campo_desc">Voluptatem sed amet elit adipi</campo_desc>
+                        <valor name="p_valor" desc="true">Sit officia amet sit labore</valor>
+                        <valor_desc name="p_valor_desc">Sit officia amet sit labore</valor_desc>
+                    </row>
+                    <row>
+                        <campo name="p_campo" desc="true">Ut omnis sed mollit rem</campo>
+                        <campo_desc name="p_campo_desc">Ut omnis sed mollit rem</campo_desc>
+                        <valor name="p_valor" desc="true">Totam lorem stract rem dolor</valor>
+                        <valor_desc name="p_valor_desc">Totam lorem stract rem dolor</valor_desc>
+                    </row>
+                    <row>
+                        <campo name="p_campo" desc="true">Totam anim officia sit magna</campo>
+                        <campo_desc name="p_campo_desc">Totam anim officia sit magna</campo_desc>
+                        <valor name="p_valor" desc="true">Aperiam amet mollit stract labore</valor>
+                        <valor_desc name="p_valor_desc">Aperiam amet mollit stract labore</valor_desc>
+                    </row>
+                    <row>
+                        <campo name="p_campo" desc="true">Voluptatem unde consectetur ac</campo>
+                        <campo_desc name="p_campo_desc">Voluptatem unde consectetur ac</campo_desc>
+                        <valor name="p_valor" desc="true">Totam omnis anim dolor iste</valor>
+                        <valor_desc name="p_valor_desc">Totam omnis anim dolor iste</valor_desc>
+                    </row>
+                </value>
+            </table>
+        </formlist_1>
+    </content>
+</rows>

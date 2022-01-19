@@ -1,0 +1,204 @@
+////
+ *******************************************************************************
+ * Copyright 2020 Paulo Borges(poolborges)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************
+////
+= IGRP Specification 
+
+== Repositories
+
+Repository MASTER ?? 
+
+* https://github.com/nosicode-cv/igrp-rest (SEM LICENÇA, NEM AVISO ESTUPIDO)
+* https://github.com/openNOSi/IGRP-Framework (NOT FOUND)
+* https://github.com/NOSiCode-CV/IGRP-Java-Template-Eclipse (IGRP COMPILADO, )
+
+Repository FORKS
+
+* https://github.com/Kowts/IGRP-Framework (LICENSE.md GPL, README.md COM AVISO ESTUPIDO)
+* https://github.com/IMarcelF/IGRP-Framework-Applications (README.md COM AVISO ESTUPIDO)
+* https://github.com/YmacStudio/IGRP-Framework (SEM LICENÇA, NEM AVISO ESTUPIDO)
+
+
+
+== How to Migrate Current Application to Future Version 
+
+...
+
+
+== IGRP 
+
+* Application 
+** is a "bundle or .jar file" that group a set of Funcionalit.
+** Provide a minifest file. 
+** composed by multiple Page
+* Component - reusable part 
+* App Resource - set of file provided by a application
+
+
+== Authzc (Should be component or Application) 
+
+* Authentication (Check and Perform user login/logout) 
+* Authorization - Check if user has permission to perform some thing(e.g do some action, view page)
+* RBAC (Rule Based Access Control) - Standard Available about how to implement this.
+
+
+== IGRP DI(Dependency Injection) 
+
+* CDI(weld), GUICE, SPRING, HK2,
+* OSGI
+
+== IGRP path/app/url Router and Controller
+
+* Clear separation between Controller and FrontController
+* FrontController call Router to resolver {HOST:8080/contextPath}/{app-id}/{app-page}/{app-page-action}/?{request-query-string}
+
+Application-ID
+public interface Controller {}
+public class AbstractController  implements Controller {}
+Method
+
+
+
+== IGRP Annotations 
+
+* @Retention(RetentionPolicy.RUNTIME)
+* package nosi.core.validator.annotation; {Email, Number, Required, Url }
+* package nosi.core.webapp; {RParam, SeparatorList} 
+** package nosi.core.webapp.annoations;
+
+
+
+== IGRP projects 
+
+How to avoid a big project source code 
+
+* igrp-server: runtime only - provide the execution enviroment for app
+
+* igrp-core: compile,runtime
+* igrp-mvc: 
+* igrp-utils: 
+
+
+
+== IGRP Master App
+
+* igrp-webide - its a IRGP application enabled that provider a web IDE for app developping
+
+
+== IGRP MasterData: 
+
+* RBAC {User, Permission, Rule, Group}
+
+
+== Internationalization and Regionalization
+
+* Internationalization(i18n)- Translation
+* (i10n)
+* Regionalization - currency, date-time format, number format
+
+
+== Developing Support Server
+
+* https://repo.nosicode.cv/release 
+* https://repo.nosicode.cv/release/archetype-catalog.xml
+
+== IGRP Application Structure
+
+At developing time is a maven project
+An IGRP application should be distributed as jar file and structure as follow: 
+
+* java class{dao, controller, utils, ...} 
+* /resource-priv {}
+* /resource-pub {.css, .xml, .xsl, .json, .html, .js, png, jpeg}
+* /lib/.jar {embedded libs}
+* META-INF/MANIFEST.IN
+* META-INF/igrp-app.cfg 
+----
+{
+    app-icon, name/app-name, groupId/app-namespace, 
+    artifactId/app-id, description/app-description, 
+    app-permissions, 
+}
+----
+
+
+
+== Pattern 
+
+
+[source, xml]
+----
+<servlet>
+    <servlet-name>app</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>app</servlet-name>
+    <url-pattern>/</url-pattern>
+</servlet-mapping>
+----
+
+
+
+== IGRP for Developer
+
+* cv.nosi.igrp.maven:igrpapp-maven-plugins
+* cv.nosi.igrp.maven:igrpapp-maven-plugins
+* copy dependency to {project.build}/
+* On create a application developer MUST provide groupId and artifactId
+
+
+== AppContext
+
+* Load all deploy application from deploy repository
+* Create a Classloader per App - Class Isolation
+
+== AppVirtualFS
+
+Java File work with URI
+* URI schemas: file://, http://, git://, vfs://, sftp://, jar://
+
+In Java 6 and earlier it is difficult because classes like File and FileInputStream provide no way to dispatch to different "virtual file systems" in Java space.
+Apache Commons VFS before to great success. It seems to be much like the custom FileSystemProvider in Java7.
+
+* In Java 7, there is support for virtual file systems(java.nio.file.spi.FileSystemProvider)
+** https://docs.oracle.com/javase/7/docs/technotes/guides/io/fsp/filesystemprovider.html[Developing a Custom File System Provider.]
+
+* Application Virtual file system provide aplication isolation 
+* When a application call ()
+
+
+Open source projects to support FileSystem Isolation: 
+
+* Apache Commons VFS, 
+** https://github.com/abashev/vfs-s3
+* Google/JIMFS 
+** Google an open-source, in-memory implementation of Java 7's FileSystemProvider.
+* https://github.com/fge/java7-fs-dropbox[FileSystem implementation over DropBox, java7-fs-dropbox]
+* https://github.com/fge/java7-fs-ftp[A Java 7 FileSystem implementation for the FTP protocol java7-fs-ftp]
+** https://github.com/fge/java7-filesystems
+
+
+* https://github.com/marschall/memoryfilesystem[An In-Memory implementation of JSR 203]
+* https://github.com/sbridges/ephemeralfs[
+
+
+== Reference
+
+* https://maven.apache.org/guides/mini/guide-creating-archetypes.html
+* https://jcp.org/en/jsr/detail?id=203[JSR 203: More New I/O APIs for the JavaTM Platform ("NIO.2")]
+** java.nio.FileSystem 

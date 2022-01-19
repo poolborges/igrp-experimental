@@ -1,0 +1,17 @@
+
+
+# TODO - MUST exclude com.sun from import   
+Import-Package: \
+    com.sun.*;resolution:=optional, *
+
+# TODO - move nosi.webapps.igrp.dao to another bundle
+Export-Package: \
+    nosi.base.*, \
+    nosi.core.*, \
+    nosi.webapps.*
+    
+
+# Process compile-time OSGI annotations
+-dsannotations: *
+-metatype: *
+-metatypeannotations: *

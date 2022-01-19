@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-jetty:run</actionName>
+            <displayName>jetty:run</displayName>
+            <goals>
+                <goal>jetty:run</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-jetty:run-forked</actionName>
+            <displayName>jetty:run-forked</displayName>
+            <goals>
+                <goal>jetty:run-forked</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-tomcat7:run</actionName>
+            <displayName>tomcat7:run</displayName>
+            <goals>
+                <goal>tomcat7:run</goal>
+            </goals>
+        </action>
+    </actions>

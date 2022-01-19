@@ -1,0 +1,114 @@
+////
+ *******************************************************************************
+ * Copyright 2020 Paulo Borges(poolborges)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************
+////
+// Global settings
+:ascii-ids:
+:encoding: UTF-8
+:lang: pt_PT
+:icons: font
+:toc: left
+:toclevels: 3
+:numbered:
+:stem:
+
+[[doc]]
+= IGRP-OSGI
+
+toc::[]
+
+[[doc.summary]]
+== Summary
+
+TODO...
+
+= IGRP-OSGI
+
+Este documento tem com obectivo analisar a integração do IGRP com OSGI, ou seja,
+extrategias que para fazer do IGRP uma solução OSGI.
+
+== Conceitos 
+
+* IGRP webapp
+** Controller
+** Action 
+** Application 
+
+== Fases 
+
+* Identificar as dependencias externas
+* Dividir o codigo base do IGRP em multiplos artifactos maven.
+** o IGRP passa a ser um projecto multi-module com o escopo bem definido de cada artifacto.
+* ELIMINAR dependencies com ciclo entre os pacotes(java package) do IGRP
+** A modularidade do IGRP começa com a remoção de dependencias com ciclo.
+*** igrp-manager ---> igrp-core
+*** Reduzir/Eliminar ciclo de dependencias ao nivel de pacotes/package
+
+
+== Dependencias 
+
+* http://mvnrepository.com/artifact/com.asprise.ocr/java-ocr-api[com.asprise.ocr:java-ocr-api:15.3.0.3] - NO: OSGI MANIFEST
+** Usado: nosi.core.webapp.helpers.OCRHelper
+* JDK Javac tool.jar(com.sun.tool.javac) - NO: MAVEN, OSGI MANIFEST
+** Usando: nosi.core.webapp.helpers.CompilerHelper
+* Java Decompiler CLI (jd-cli) - NO: MAVEN, OSGI MANIFEST
+** Usado: nosi.core.webapp.helpers.CompilerHelper
+
+
+== Dependencias não disponivel no maven-central
+
+Criar um projecto maven do tipo pom (igrp-3party-libs) 
+que contem os jar e instala-os no maven-local durante o build/compilação.
+
+* Devera ser o projecto modulo no igrp-project (Parent project)
+
+
+== Service Provider Interface
+
+* META-INF/services/cv.nosicode.igrp.tool.Compiler
+* META-INF/services/cv.nosicode.igrp.tool.Decompiler
+* META-INF/services/cv.nosicode.igrp.tool.OCRProcessor
+
+
+== Boas Praticas
+
+* Programmar Orientado a Interface, usar ServiceLoader para obter a implmentaçao.
+* Definir de forma clara pacotes não publico com "x.internal.Class" ou "x.impl.Class"
+* Reduzir/Eliminar o numero de codigo estatico existente no projecto
+
+
+== IGRP-OSGI
+
+* É tempo de desenvolvimento é um projecto maven
+* webapp é um bundle (.jar) que conter todos os recursos classes e ficheiros estaticos (.css, .js. .xml, .json, .png)
+** /IGRP-webapp/ (ficheiros estaticos e publico do webapp)
+** /META-INF/MANIFEST.INF
+** IGRP-INF/
+
+
+
+== IGRPBuilder 
+
+* Desenvolvimento de Plugins
+** IGRP-MavenBuilder 
+** IGRP-GradleBuilder
+
+* IGRP-MavenBuilder - é uma implementação do IGRP-Builder que evoca que usa o mavem 
+
+
+== Referencias
+
+TODO...

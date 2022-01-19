@@ -1,0 +1,330 @@
+= IGRP-Builder
+
+
+
+== Artifact
+
+* https://codehaus-plexus.github.io/plexus-compiler/
+* https://mvnrepository.com/artifact/com.google.errorprone/javac/1.8.0-u20[A repackaged copy of javac ]
+
+
+== Future SPI 
+
+* cv.nosicode.buildtool.api
+* cv.nosicode.buildtool.impl.EcjCompilerImpl
+* cv.nosicode.buildtool.impl.JdDecompilerImpl
+
+cv.nosicode.buildtool
+
+== Eclipse Compiler (Eclipse Compler for Java ECJ)
+
+[source, bash]
+----
+$ java -jar ecj-3.5.2.jar -version
+$ java -jar org.eclipse.jdt.core_3.5.2.v_981_R35x.jar -version
+
+$ java -jar ecj-3.5.2.jar HelloWorld.java
+$ java -jar org.eclipse.jdt.core_3.5.2.v_981_R35x.jar
+----
+
+== Eclipse ECJ » 4.6.1
+
+.Eclipse JDT Core Batch Compiler 
+[source, java]
+----
+org.eclipse.jdt.compiler.CompilationProgress progress = null; // instantiate your subclass
+org.eclipse.jdt.internal.compiler.batch.BatchCompiler.compile(
+    "-classpath rt.jar A.java", 
+    new PrintWriter(System.out), 
+    new PrintWriter(System.err), progress);
+----
+
+[source, xml]
+----
+<dependency>
+    <groupId>org.eclipse.jdt.core.compiler</groupId>
+    <artifactId>ecj</artifactId>
+    <version>4.6.1</version>
+</dependency>
+----
+
+== Apache Jasper Compiler 
+
+[source, java]
+----
+public class AntCompiler extends Compiler {
+    protected void generateClass(String[] smap) 
+        throws FileNotFoundException, org.apache.jasper.JasperException, Exception {}
+}
+
+public class JDTCompiler extends Compiler {
+    protected void generateClass(String[] smap) 
+        throws FileNotFoundException, org.apache.jasper.JasperException, Exception {}
+}
+
+public class JspC implements Options {
+    public static void main(){}
+}
+----
+
+
+== Embedded Gradle 
+
+* https://docs.gradle.org/current/userguide/embedding.html
+
+[source, java]
+----
+import org.gradle.api.Project
+import org.gradle.api.artifacts.ProjectDependency
+import org.gradle.api.artifacts.maven.MavenDeployer
+import org.gradle.api.tasks.Upload
+
+private fun collectDependenciesForConfiguration(
+            projectDependencies : MutableSet<ProjectDependency>, 
+            project : Project, name : String) {
+
+    val config = project.configurations.findByName(name)
+    if (config != null) {
+        config.dependencies.withType(ProjectDependency::class.java).forEach {
+            dep -> projectDependencies.add(dep)
+        }
+    }
+}
+----
+
+
+== Embedded Maven 
+
+* Example: M2Eclipse.
+* Maven Execution Request(MavenExecutionRequest)
+** http://maven.apache.org/ref/3.0.3/maven-core/apidocs/org/apache/maven/execution/DefaultMavenExecutionRequest.html#setGoals%28java.util.List%29
+* http://maven.apache.org/ref/3.0/maven-embedder/apidocs/index.html
+
+[source, java]
+----
+// org.apache.maven:maven-core:jar:3.0.4
+
+public static void build(File directory, File pom) {
+    Maven maven = new DefaultMaven();
+    MavenExecutionRequest exec = new DefaultMavenExecutionRequest();
+    exec.setBaseDirectory(directory);
+    exec.setPom(pom);
+    exec.setGoals((List<String> goals));
+    MavenExecutionResult result = maven.execute(exec);
+    MavenProject proj = result.getProject();
+    Artifact art = proj.getArtifact();
+    System.out.println(art);
+}
+----
+
+== Javac
+* com.sun.tools.javac.Main.compile
+
+[source, java]
+----
+compilationResult = com.sun.tools.javac.Main.compile(
+    new String[]{
+				"-classpath", Config.getBasePathClass(),
+				"-cp", jars+Config.getBasePathClass()+System.getProperty("path.separator"),
+				"-d", Config.getBasePathClass(),
+				className
+    });
+
+if(compilationResult == 0){
+    System.out.println("Suce Compilated");
+}
+----
+
+== Java Compiler API
+
+* introduced in JDK 1.6
+* http://www.oracle.com/technetwork/java/javase/features-141434.html
+* https://docs.oracle.com/javase/7/docs/technotes/guides/javac/index.html
+* JSR 199: Java compiler API - https://jcp.org/en/jsr/detail?id=199
+* https://docs.oracle.com/javase/8/docs/api/javax/tools/package-summary.html#package_description
+* META-INF/services/javax.tools.JavaCompiler (ex: com.vendor.VendorJavaCompiler)
+** JavaCompiler compiler = ServiceLoader.load(JavaCompiler.class).iterator().next();
+* https://docs.oracle.com/javase/8/docs/api/javax/tools/package-summary.html
+*  This only requires the JDK being installed at the local machine on top of JRE.
+
+[source, java]
+----
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+ 
+public class CompileHello {
+ 
+    public static void main(String[] args) {
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        //These three argument will use the default System.in, System.out and System.err. 
+        int result = compiler.run(null, null, null, "src/org/javac/example/tools/Hello.java");
+ 
+        System.out.println("Compile result code = " + result);
+    }
+ 
+}
+----
+
+[source, java]
+----
+// Example 
+JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+int result = compiler.run(null, null, null, "a_file_name");
+
+// Example 
+InputStream input = generateSourceCode();
+OutputStream output = getByteCode(input);
+doCoolStuffWithByteCode(output);
+
+// Example 
+Properties foo = new Properties();
+foo.load(new FileInputStream(new File("ClassName.properties")));
+String class_name = foo.getProperty("class","DefaultClass");
+Class newClazz = Class.forName(class_name).newInstance();
+IController newController = (IController) clazz.newInstance();
+if(newController instanceof IController){
+
+}
+IDynamicLoad newClass = (IDynamicLoad) Class.forName(class_name).newInstance();
+----
+
+
+[source, java]
+----
+// Prepare source somehow.
+String source = "package test; public class Test { static { System.out.println(\"hello\"); } public Test() { System.out.println(\"world\"); } }";
+
+// Save source in .java file.
+File root = new File("/java"); // On Windows running on C:\, this is C:\java.
+File sourceFile = new File(root, "test/Test.java");
+sourceFile.getParentFile().mkdirs();
+Files.write(sourceFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
+
+// Compile source file.
+JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+compiler.run(null, null, null, sourceFile.getPath());
+
+// Load and instantiate compiled class.
+URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { root.toURI().toURL() });
+Class<?> cls = Class.forName("test.Test", true, classLoader); // Should print "hello".
+Object instance = cls.newInstance(); // Should print "world".
+System.out.println(instance); // Should print "test.Test@hashcode".
+----
+
+== Reflection API 
+* Otherwise you need to involve the Reflection API to access 
+and invoke the (unknown) methods/fields.
+
+----
+properties.load(
+    Thread.currentThread()
+    .getContextClassLoader()
+    .getResourceAsStream("ClassName.properties"));
+----
+
+== IGRP and Jetty
+[source, xml]
+----
+<plugins>
+    <!-- mvn jetty:run -->
+    <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.8.v20171121</version>
+        <configuration>
+            <webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
+            <loginServices>
+                <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+                    <name>IGRP_ADMIN_REALM</name>
+                </loginService>
+            </loginServices>
+        </configuration>
+    </plugin>
+</plugins>
+----
+
+== IGRP Tools
+
+cv.nosicode.igrp.tools.archetype
+[source, xml]
+----
+<dependency>
+    <groupId>cv.nosicode.igrp.appserver.api</groupId>
+    <artifactId>cv.nosicode.igrp.appserver.api.constrainedDelegation</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<dependency>
+    <groupId>cv.nosicode.igrp.core.gui</groupId>
+    <artifactId>cv.nosicode.igrp.appserver.api.constrainedDelegation</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<dependency>
+      <groupId>cv.nosicode.igrp.webframework</groupId>
+      <artifactId>igrp.igrp.webframework.api/artifactId>
+      <version>RELEASE</version>
+      <type>pom</type>
+      <scope>provided</scope>
+</dependency>
+
+<dependency>
+      <groupId>cv.nosicode.igrp.tools.builder</groupId>
+      <artifactId>igrp.tools.builder.thirdparty</artifactId>
+      <version>RELEASE</version>
+      <type>pom</type>
+      <scope>provided</scope>
+</dependency>
+<dependency>
+      <groupId>cv.nosicode.igrp.tools.builder</groupId>
+      <artifactId>igrp.tools.builder.apis</artifactId>
+      <version>RELEASE</version>
+      <type>pom</type>
+      <scope>provided</scope>
+</dependency>
+<dependency>
+      <groupId>cv.nosicode.igrp.tools.builder</groupId>
+      <artifactId>igrp.tools.builder.spis</artifactId>
+      <version>RELEASE</version>
+      <type>pom</type>
+      <scope>provided</scope>
+</dependency>
+----
+
+
+
+== NOSI 
+
+* 1998 
+* NOSI 
+* 2014 - EPE ()
+
+=== O que 
+* 80 ApplICAÇÕES
+* 
+* 19 ANO 
+* 12000 ESTADO 
+* 32 SALA VIDEO 
+* 9 ILHAS CONNECTAS 
+* SOF DEV, CONSULTION, DATACENTER, TELECOMUNICAÇÕES
+* 170 COLABORADORES
+
+
+=== IGRP 
+
+* SIGOV ()
+* SIM (AUTORQUIA)
+* RMI (REGISTO NACIONA IDEN)
+* CASA CIDADAO
+** CERTIFICADO, EMPRESA DIA, PASSPORT
+* SIGE (Sistema Integrado de Gestão Escolar.)
+* Connect 
+** 122 PRAÇAS DI
+* SIS (SISTEMA INEGRADO Saude)
+* SIE (SISTEMA INTEGRADO DE Ele)
+
+=== DATACENTER
+
+* 7 NIVEIS DE SECUGURANÇA
+
+

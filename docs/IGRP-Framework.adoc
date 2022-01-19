@@ -1,0 +1,667 @@
+////
+ *******************************************************************************
+ * Copyright 2020 Paulo Borges(poolborges)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************
+////
+[[doc]]
+= IGRP-Framework
+
+
+toc::[]
+
+== Sample 1 
+
+IGRP-Framework OAuth 2.0 & Rest API based on Jersey RESTful WS 
+
+
+[source, xml]
+----
+<listener>
+    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+</listener>
+
+<listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+ <servlet>
+  <servlet-name>springmvc</servlet-name>
+  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+ </servlet>
+
+ <servlet-mapping>
+  <servlet-name>springmvc</servlet-name>
+  <url-pattern>/</url-pattern>
+ </servlet-mapping>
+</web-app>
+
+
+<mvc:resources mapping="/static/**" location="/static/" />
+<mvc:default-servlet-handler />
+----
+
+[source, java]
+----
+@Configuration
+@EnableWebMvc
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
+ 
+   // Static Resource Config
+   @Override
+   public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    
+       // Css resource.
+       registry.addResourceHandler("/styles/**") //
+                 .addResourceLocations("/WEB-INF/resources/css/").setCachePeriod(31556926);
+        
+   }
+}
+
+----
+
+
+== JDBC H2
+
+* SERVER - jdbc:h2:~/db_igrp_core;AUTO_SERVER=TRUE
+* MEM - jdbc:h2:~:db_igrp_core;AUTO_SERVER=TRUE
+
+== HSQLDB 
+
+== lingua.jar 
+
+* dependencies: nosi.core.webapp.Component
+
+== IGRP-Core 
+
+** nosi.base, 
+** nosi.core,
+** nosi.core.webapp, 
+** nosi.core.webapp.webservices.biztalk
+** nosi.core.xml, 
+
+=== Webapp Escola 
+
+** nosi.webapps.escola, 
+** nosi.webapps.escola.pages.dashboard, 
+** nosi.webapps.escola.pages.dashboard1, 
+** nosi.webapps.escola.pages.defaultpage, 
+** nosi.webapps.escola.pages.t_processo1form, 
+** nosi.webapps.escola.pages.t_processo1list
+
+
+=== Webapp IGRP-Webreport 
+
+...
+
+=== Webapp IGRP-Webconsole 
+
+(Manage master data such as: User, Permission, webapp, Organization, Repositories, ...)
+
+** nosi.webapps.igrp 
+** nosi.webapps.igrp.dao
+
+=== Webapp IGRP-Studio (Web IDE) 
+
+...
+
+== IGRP webapp Bundle 
+
+* hibernate-appid.cfg.xml 
+* IGRP-INF\
+** MANIFEST.INF 
+** IGRP-appid:cv.nosi.webapps:agenda-app
+** IGRP-appresource:/public
+
+----
+{IGRP_APP_ID} groupdID:artifactid or namespace:app
+{IGRP_APP_NAME}
+{IGRP_APP_VERSION}
+{IGRP_APP_RESOURCE}
+----
+
+
+== Jetty 
+
+* org.eclipse.jetty.maven.plugin.JettyWebAppContext
+
+
+.Example jetty-test.xml
+[source, xml]
+----
+----
+
+.Example pom.xml
+[source, xml]
+----
+<configuration>
+   <!--  <webAppXml>src/test/resources/jetty-test.xml</webAppXml>  -->
+    <useTestScope>true</useTestScope>
+    <loginServices>
+    <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+        <name>MySecurityRealm</name>
+        <config>${basedir}/src/test/resources/jetty-realm.properties</config>
+    </loginService>
+    </loginServices>
+</configuration>
+----
+
+
+== Sample 2
+
+
+----
+nosi.core.listener.UserSessionListener does not implement one of the servlet listener interfaces
+nosi.core.servlet.IgrpSSO defines neither @WebServlet.value nor @WebServlet.urlPatterns
+nosi.core.servlet.IgrpServlet defines neither @WebServlet.value nor @WebServlet.urlPatterns
+----
+
+
+
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>store config igrp database</comment>
+<entry key="hostname">~</entry>
+<entry key="type_db">h2</entry>
+<entry key="port">0</entry>
+<entry key="password">root</entry>
+<entry key="connectionName">hibernate-igrp-core</entry>
+<entry key="dbname">db_igrp_core</entry>
+<entry key="username">root</entry>
+</properties>
+----
+
+
+----
+Started Jetty Server
+Config for:hibernate-igrp-core
+java.io.FileNotFoundException: /db_igrp_config.xml (Permission denied)
+	at java.io.FileOutputStream.open0(Native Method)
+	at java.io.FileOutputStream.open(FileOutputStream.java:270)
+----
+
+
+== Cyclic dependency analysis 
+
+* JDepend
+
+----
+java -cp %CLASSPATH% jdepend.swingui.JDepend C:/petstore
+
+set CLASSPATH=%CLASSPATH%;%JDEPEND_HOME%\lib\jdepend-<version>.jar
+
+java jdepend.swingui.JDepend 
+
+
+java -cp jdepend-2.9.1.jar jdepend.swingui.JDepend $MY_LIBS_HOME
+
+export MY_LIBS_HOME=/Users/pauloborges/_GIATSI/PROJECTOS_FORK/NOSCODE/igrp-libs/libs
+
+java jdepend.textui.JDepend -file report.txt $MY_LIBS_HOME
+----
+
+== APP IGRP (App Manager)
+
+* http://localhost:8080/webapps?r=igrp/home/index
+* http://localhost:8080/webapps?r=igrp/MapaProcesso/index
+* http://localhost:8080/webapps?r=igrp/ExecucaoTarefas/index
+* http://localhost:8080/webapps?r=igrp/Settings/index
+* http://localhost:8080/webapps?r=igrp/PesquisarUtilizador/index&dad=igrp
+* http://localhost:8080/webapps?r=igrp/Gestaodeacesso/index&dad=igrp
+* http://localhost:8080/webapps?r=igrp/Session/index&dad=igrp
+* http://localhost:8080/webapps?r=igrp/Transaccao/index&dad=igrp
+* http://localhost:8080/webapps?r=igrp/PesquisarMenu/index&dad=igrp
+* http://localhost:8080/webapps?r=igrp/Page/index 
+* http://localhost:8080/webapps?r=igrp/ListaPage/gerar_codigo&prm_app=igrp&prm_page=ListaPage&&p_id_page=45#
+
+
+== IGRP Studio
+
+* http://localhost:8080/webapps?r=igrp_studio/HomeStudio/index
+* http://localhost:8080/webapps?r=igrp/env/openApp&app=igrp_studio&page=/HomeStudio/index
+
+
+== Tutorial IGRP
+
+* http://localhost:8080/webapps?r=tutorial/GeralApresentacao/index
+* http://localhost:8080/webapps?r=igrp/env/openApp&app=tutorial&page=/GeralApresentacao/index
+
+
+== reclamatorio
+
+* http://localhost:8080/webapps?r=reclamatorio/default-page/index
+* http://localhost:8080/webapps?r=igrp/env/openApp&app=reclamatorio&page=/Home/index
+
+
+
+== Exemplo Structure app "tutorial"
+
+.Estrutura projeto maven 
+----
+pom.xml {groupId:, artifactId: }
+src/main/java/
+    org.kriolos.reclamatorio.pages.defaultpage/DefaultPageController.java
+src/main/resources/statics/ 
+    pages/geralapresentacao/GeralApresentacao.json
+    pages/geralapresentacao/GeralApresentacao.xml 
+    pages/geralapresentacao/GeralApresentacao.xsl
+----
+
+== Exemplo Structure app "reclamatorio" sistema de gestão de reclamações
+
+.Estrutura projeto maven 
+----
+pom.xml {groupId:, artifactId: }
+src/main/java/
+    org.kriolos.reclamatorio.pages.defaultpage/DefaultPageController.java
+src/main/resources/statics/ 
+    pages/home/Home.json 
+----
+
+.Estrutura projeto apos build(.jar) 
+----
+META-INF/MANIFEST.MF {}
+META-INF/statics/
+org.kriolos.reclamatorio.pages.defaultpage
+org.kriolos.reclamatorio.pages.registarpage
+----
+
+== AppHandler 
+
+...
+
+== AppResourceHandler ou AppStaticHandler
+
+* (css, jss, xml, xsd, json)
+
+== Criar uma app 
+
+* Defnir o package: 
+
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="images/IGRP/IGRP2.3/app/reclamatorio/home/Home.xsl" type="text/xsl"?>
+<rows>
+    <link_img>/IGRP/images/IGRP/IGRP2.3</link_img>
+    <site>
+        <welcome_note>Oba</welcome_note>
+        <footer_note>2017 - Copyright NOSI</footer_note>
+        <user_name>Hexagon</user_name>
+        <button type="specific">
+            <title>Sair</title>
+            <app>DUA</app>
+            <page />
+            <link>#</link>
+            <target>_self</target>
+            <img>exit.png</img>
+        </button>
+    </site>
+    <page>Home</page>
+    <app>reclamatorio</app>
+    <plsql>
+        <action>index</action>
+        <package_instance></package_instance>
+        <package_db></package_db>
+        <package_html></package_html>
+        <table_name></table_name>
+        <with_replace>false</with_replace>
+        <with_label>false</with_label>
+        <with_biztalk>false</with_biztalk>
+        <dynamic_menu>false</dynamic_menu>
+        <copy_menu>false</copy_menu>
+        <package_copy_db />
+        <package_copy_html />
+        <preserve_url>webapps?r=igrp/page/preserveUrl&amp;p_id=45</preserve_url>
+    </plsql>
+    <content>
+        <title>home</title>
+    </content>
+</rows>
+----
+
+
+
+----
+  <context-param>
+      <param-name>workspace</param-name>
+      <param-value>.</param-value>
+  </context-param>
+  
+
+
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>IGRP_REALM_NAME</realm-name>
+  </login-config>
+----
+
+
+
+----
+<plugins>
+    <!-- mvn jetty:run -->
+    <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.8.v20171121</version>
+        <configuration>
+            <webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
+            <loginServices>
+                <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+                    <name>IGRP_REALM_NAME</name>
+                </loginService>
+            </loginServices>
+        </configuration>
+    </plugin>
+    <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+            <warSourceDirectory>${project.basedir}/WebContent</warSourceDirectory>
+        </configuration>
+    </plugin>
+</plugins>
+----
+
+
+== Monitoring 
+
+* JAMon- http://jamonapi.sourceforge.net/
+* stagemonitor - http://www.stagemonitor.org/
+* JavaMelody - https://github.com/javamelody/javamelody/wiki
+* Jolokia 
+* MoSKito
+* psi-probe - https://github.com/psi-probe/psi-probe
+
+=== MoSKito
+
+* MIT license
+
+https://github.com/anotheria/moskito  
+https://github.com/anotheria/moskito-control  
+https://github.com/anotheria/moskito-central  
+https://github.com/anotheria/moskito-control-agent
+
+== Managing 
+
+* RHQ. RHQ is an enterprise management solution for JBoss middleware projects, Tomcat, Apache Web Server, and numerous other server-side 
+
+== Tools
+
+* JConsole
+* JVisualVM
+* JAMon - http://jamonapi.sourceforge.net/
+* JMC - Java Mission Control 
+
+== JMX
+
+* org.springframework.jmx.export {@ManagedResource, @ManagedAttribute, etc.}
+* http://256stuff.com/sources/simplejmx/
+
+
+----
+public interface MyEventCounterMBean {
+  public long getEventCount();
+  public void addEventCount();
+  public void setEventCount(long count);
+}
+----
+
+----
+@Component
+@ManagedResource(objectName="my.monitoring:type=MyEventCounter")
+package my.monitoring;
+public class MyEventCounter implements MyEventCounterMBean {
+  public static final String OBJECT_NAME="my.monitoring:type=MyEventCounter";
+  private long eventCount=0;
+
+  @Override
+  public long getEventCount() {
+    return eventCount;
+  }
+
+  @ManagedAttribute
+  @Override
+  public void addEventCount() {
+    eventCount++;
+  }
+
+  @Override
+  public void setEventCount(long count) {
+    this.count = count;
+  }
+}
+----
+
+----
+MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+ObjectName myEventCounterName = new ObjectName(MyEventCounter.OBJECT_NAME);
+MyEventCounter myEventCounter = new MyEventCounter();
+mbs.registerMBean(myEventCounter, myEventCounterName);
+----
+
+----
+MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+ObjectName myEventCounterName = new ObjectName(MyEventCounter.OBJECT_NAME);
+mbs.invoke(myEventCounterName, "addEventCount", null, null);
+
+mbs.invoke(myEventCounterName, "setEventCount", new Object[] {number}, new String[] {int.class.getName()});
+----
+
+== simplejmx
+
+* http://256stuff.com/sources/simplejmx/
+
+
+----
+@JmxResource(domainName = "j256", objectName = "lookupCache")
+public class LookupCache {
+
+    // this can also be done as @JmxAttributeMethod on the getter/setters
+    @JmxAttributeField(description = "Number of hits in the cache")
+    private int hitCount;
+    ...
+
+    @JmxOperation(description = "Flush the cache")
+    public void flushCache() {
+       ...
+    }
+}
+
+// create a new server listening on port 8000
+JmxServer jmxServer = new JmxServer(8000);
+jmxServer.start();
+// register our lookupCache object defined above
+jmxServer.register(lookupCache);
+----
+
+
+== IGRP SQL Query 
+
+----
+view.table_1.setSqlQuery("
+SELECT 'Como contribuir no IGRP JAVA Framework' documento , 
+'http://www.nosicode.cv/index.php/pt/documentacao/igrp-framework/documentacao-do-utilizador/send/2-documentacao-do-utilizador/4-tutorial-contribuir-para-igrp-framework' ver UNION SELECT 'Import IGRP IGRP JAVA Framework' documento, 
+'http://www.nosicode.cv/index.php/pt/documentacao/igrp-framework/documentacao-do-utilizador/send/2-documentacao-do-utilizador/8-import-igrp-java' ver UNION SELECT 'Minha Primeira Aplica����o IGRP JAVA Framework' documento, 
+'http://www.nosicode.cv/index.php/pt/documentacao/igrp-framework/documentacao-do-utilizador/send/2-documentacao-do-utilizador/9-minha-primeira-aplicacao' ver
+
+");
+----
+    
+== IGRP Platform 
+
+* cv.nosi.igrp.core (cv.nosi.igrp.core.helpers 
+* cv.nosi.igrp.builder (Compiler, Decompiler) 
+* cv.nosi.igrp.mvc  (API for f)
+* cv.nosi.igrp.web 
+* cv.nosi.igrp.engine (Bundle implementing the core of IGRP.)  
+
+----
+nosi-igrp-core ()
+nosi-igrp-web (Page: Controller/Actions/Views, MVC framework: Controller, IgrpDispacther a FrontController Pattern, )
+nosi-igrp-builder (JavaCompiler, JavaDecompiler, ProjectBuilder, ProjectAsembly, ProjectInfo)
+nosi-igrp-repo (Repository manager jgit)
+nosi-igrp-container (Runtine container to deploy webapp)
+nosi-igrp-webconsole (Web Admnistration) 
+nosi-webapp-agenda (Web application )
+nosi-webapp-kofax
+nosi-webapp-marcacaoconsulta
+----
+
+* workspace/repository 
+* organization/repository/project
+
+
+----
+public class ${ControllerName}Controller extends Controller {
+    public Response action${Action}(Request request) ${throws} {
+        ${controllerBody}
+    }
+}
+
+//
+public class ${controllerName}Controller extends AbstractController {
+
+    public HttpResponse ${actionName}Action (HttpRequest request) ${throws} {
+        ${controllerBody}
+    }
+}
+----
+
+== IGRP Servlets 
+
+|===
+|url mapping |name |class |load on startup 
+|
+|/images/* |default |
+|NONE |Log4JInitServlet | true
+
+
+== Remove duplicate .jar 
+
+* /WEB-INF/lib/javax.servlet-api-3.1.0.jar any servlet container(tomcat,...) provide packages/classes available on this jar 
+* /WEB-INF/lib/javax.mail-api-1.6.0.jar all classes are provided by javax.mail-1.5.5.jar
+
+
+== Sample 3
+
+---
+nosi.core.listener.UserSessionListener does not implement one of the servlet listener interfaces
+nosi.core.servlet.IgrpSSO defines neither @WebServlet.value nor @WebServlet.urlPatterns
+nosi.core.servlet.IgrpServlet defines neither @WebServlet.value nor @WebServlet.urlPatterns
+
+ServletContext@o.e.j.m.p.JettyWebAppContext@7207cb51
+{/,file:///IGRP-Template/WebContent/,STARTING}
+{file:///IGRP-Template/WebContent/} has uncovered http methods for path: /igrpsso
+ //IGRP-Template/WebContentWEB-INF/log4j.properties file not found, so initializing log4j with BasicConfigurator
+----
+
+== Servlet 3.1 
+
+----
+<filter>
+    <filter-name>BasicSecurity</filter-name>
+    <filter-class>nosi.core.filter.BasicSecurityFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>BasicSecurity</filter-name>
+    <servlet-name>igrp</servlet-name>
+</filter-mapping>
+
+<filter>
+    <filter-name>IgrpCharacterEncoding</filter-name>
+    <filter-class>nosi.core.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>IgrpCharacterEncoding</filter-name>
+    <servlet-name>igrp</servlet-name>
+</filter-mapping>
+
+
+<servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/static/*</url-pattern>
+</servlet-mapping>
+----
+
+
+
+== IGRP Improvment suggestions 
+
+* Improve Software Design: Layered
+* Dependency graph: avoid ""
+* Documentation 
+* Use multi-module project 
+* Naming convention for: maven groupID, ArtifacID, package, classe method 
+* Semantic version (e.x: 1.2.1 major.minor.patch)
+* Generate API change (what change between version on public API)
+* Publish artifact to maven (initial with a )
+* Use where possible specification/api and not the implementation 
+** JPA(javax.) not Hibernate (org.hibernate)
+* Clean separation betweeen public and internal API 
+* Software test: Unit, Integration 
+* Clean separation of API, SPI and implementation
+* Extensibilty
+* Adopt runtime: OSGI, JEE 7, Microprofile 
+* Adopt best pratices: Design Pattern 
+* Create UML diagram when need to better describe 
+* Define a common "language"
+** Organization, Application, Page, Service, API, SPI 
+* Improvment Security (compile time and runtime)
+** Authentication, Authorization
+** static analisys, 
+* Configurable (improve configuration)
+
+
+
+== IGRP-REST-BASE
+
+* Base package cv.nosicode.igrprest.X, cv.nosi.
+
+** cv.nosicode.igrprest.config - configuration support (Wrapper microprofile-config)
+** cv.nosicode.igrprest.service - some classe 
+** cv.nosicode.igrprest.web.resource - jax-rs class 
+** cv.nosicode.igrprest.model - database entities 
+** cv.nosicode.igrprest.datacontracts - Input/Output Data(JSON, XML) to communicate with World
+*** GenericError, Generic
+** cv.nosicode.igrprest.web.filter -  Filter such as: Authentication, Exception
+** cv.nosicode.igrprest.web.providers - 
+** cv.nosicode.igrprest.security - classes relate with Autentication and Authorization
+** cv.nosicode.igrprest.security.utils - Utils classes(classes with static methods) relate with security 
+** cv.nosicode.igrprest.utils - Base utils 
+
+----
+igrpframework.core - is core classes and utils for igrp projects 
+igrpframework.gui
+igrpframework.web
+igrpframework.web 
+----
+
+== igrpportal 
+
+* Is a mulitenant, multiuser execution enviroment to manage and run webapp
+* Provide a clean authentication and Authorization 
+* Provide a clean SingleSignOn
+
+== igrps webapps 
+
+are business aplication developed on top of IGRP

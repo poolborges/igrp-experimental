@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cv.nosi.igrp.webapps</groupId>
+    <artifactId>igrp.webapps</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+ 
+    <name>IGRP :: Webapps</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    
+    <modules>
+        <module>nosi.webapps.agenda</module>
+        <module>nosi.webapps.kofax</module>
+        <module>nosi.webapps.marcacaoconsulta</module>
+        <!-- 
+        
+        <module>nosi.webapps.igrp</module>
+        -->
+        <module>nosi.webapps.assettracker</module>
+      </modules>
+      
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cv.nosicode.igrp</groupId>
+                <artifactId>igrp-bom</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- THIS 2 ARTIFACTS NEED IN FUTURE -->
+            <dependency>
+                <groupId>cv.nosicode.igrp</groupId> 
+                <artifactId>cv.nosicode.igrp.core</artifactId> 
+                <version>3.0.0-SNAPSHOT</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>cv.nosicode.igrp</groupId> 
+                <artifactId>cv.nosicode.igrp.portalmanager</artifactId> 
+                <version>3.0.0-SNAPSHOT</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>cv.nosicode.igrp</groupId> 
+                <artifactId>cv.nosicode.igrp.utils</artifactId> 
+                <version>3.0.0-SNAPSHOT</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

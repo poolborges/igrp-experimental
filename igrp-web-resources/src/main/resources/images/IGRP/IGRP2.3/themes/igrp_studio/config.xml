@@ -1,0 +1,15 @@
+<style>
+
+	<logo>img/studioLogoBlank.svg</logo>
+
+	<nav>
+		<buttonsHover>#008900</buttonsHover>
+	</nav>
+ 	
+	<sidebar>
+		<background>#008900</background>
+	</sidebar>
+
+	<logo>img/logo.png</logo>
+
+</style>

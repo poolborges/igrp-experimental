@@ -1,0 +1,15 @@
+
+
+# TODO - MUST validate the generate manifest  
+Import-Package: \
+    *
+
+# TODO - SHOULD export only pages 
+Export-Package: \
+    nosi.core.webapp.helpers
+    
+
+# Process compile-time OSGI annotations
+-dsannotations: *
+-metatype: *
+-metatypeannotations: *

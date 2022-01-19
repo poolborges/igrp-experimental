@@ -1,0 +1,33 @@
+= XML
+
+
+== Java SE 
+
+Java standard library provides an (XSLT) transformation interface for XML parsing. 
+See the API documentation for the classes javax.xml.transform.Transformer and javax.xml.transform.TransformerFactory
+
+== JAXP
+
+== Saxon (XSLT Processor)
+
+* Supported API: JAXP, s9api
+
+
+----
+java -Xms2048M -Xmx10000M -jar saxon9.jar -t -repeat:1 -o %out%  %xml%  %xsl%  %param[ name=\"value\"]%
+----
+
+
+== Xalan (XSLT Processor)
+
+== Extensible Stylesheet Language Transformations (XSLT 2.0)
+
+
+== 
+
+
+
+Lifepaths.class.getClass().getResourceAsStream(...) loads resources using system class loader, it obviously fails because it does not see your JARs
+
+Lifepaths.class.getResourceAsStream(...) loads resources using the same class loader that loaded Lifepaths class and it should have access to resources in your JARs
+

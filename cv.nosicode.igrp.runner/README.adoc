@@ -1,0 +1,47 @@
+= IGRP
+
+
+== RUN Jetty Plugin
+
+Change code to work with Jetty
+
+.pom.xml
+----
+<plugins>
+        <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.8.v20171121</version>
+        <configuration>
+            <webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
+            <loginServices>
+                <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+                    <name>IGRP_RestrictedZoneRealm</name>
+                </loginService>
+            </loginServices>
+
+            <env>-server -Xmx512m</env>
+            <scanIntervalSeconds>5000</scanIntervalSeconds>
+            <httpConnector>
+                <!--host>localhost</host -->
+                <port>8080</port>
+            </httpConnector>
+        </configuration>
+    </plugin>
+</plugins>
+----
+
+
+.web.xml
+----
+<context-param>
+    <param-name>workspace</param-name>
+    <param-value>.</param-value>
+</context-param>
+
+
+<login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>Default</realm-name>
+  </login-config>
+----

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <db>
+        <connectionName>hibernate-igrp-core</connectionName>
+        <dbmsName>h2</dbmsName>
+        <hostName>~</hostName>
+        <dbName>db_igrp</dbName>
+        <user>root</user>
+        <password>root</password>
+        <port>0</port>
+        <default>true</default>
+    </db>
+</config>

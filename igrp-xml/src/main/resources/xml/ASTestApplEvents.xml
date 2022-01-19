@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="ASTestApplEvents.xsl"?>
+<!-- ASTest_Appl_Events.xml -->
+<ASTestApplEvents>
+    <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+        <System>
+            <Provider Name='Report Server Windows Service (MSSQLSERVER)'/>
+            <EventID Qualifiers='0'>107</EventID>
+            <Level>2</Level>
+            <Task>5</Task>
+            <Keywords>0x80000000000000</Keywords>
+            <TimeCreated SystemTime='2019-07-08T10:01:35.000000000Z'/>
+            <EventRecordID>270493</EventRecordID>
+            <Channel>Application</Channel>
+            <Computer>ASTest</Computer>
+            <Security/>
+        </System>
+        <EventData>
+            <Data>Report Server Windows Service (MSSQLSERVER)</Data>
+        </EventData>
+    </Event>
+    <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+        <System>
+            <Provider Name='Microsoft-Windows-User Profiles Service' Guid='{89B1E9F0-5AFF-44A6-9B44-0A07A7CE5845}'/>
+            <EventID>1530</EventID>
+            <Version>0</Version>
+            <Level>3</Level>
+            <Task>0</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime='2019-07-08T10:00:10.973301100Z'/>
+            <EventRecordID>270438</EventRecordID>
+            <Correlation/>
+            <Execution ProcessID='848' ThreadID='524'/>
+            <Channel>Application</Channel>
+            <Computer>ASTest</Computer>
+            <Security UserID='S-1-5-18'/>
+        </System>
+        <EventData Name='EVENT_HIVE_LEAK'>
+            <Data Name='Detail'>1 user registry handles leaked from \Registry\User\S-1-5-21-659900985-4002748794-950523200-1002:
+                Process 300 (\Device\HarddiskVolume3\Windows\System32\conhost.exe) has opened key \REGISTRY\USER\S-1-5-21-659900985-4002748794-950523200-1002\Control Panel\International
+            </Data>
+        </EventData>
+    </Event>
+</ASTestApplEvents>

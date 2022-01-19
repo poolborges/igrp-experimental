@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="images/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl" type="text/xsl"?>
+<rows>
+    <site>
+        <welcome_note>Ola</welcome_note>
+        <footer_note>2011 - Copyright NOSI</footer_note>
+        <user_name>red-igrp</user_name>
+        <button type="specific">
+            <title>Sair</title>
+            <app>RED</app>
+            <page />
+            <link>#</link>
+            <target>_self</target>
+            <img>exit.png</img>
+        </button>
+    </site>
+    <page>Pesquisa_arquivo_pdf</page>
+    <app>kofax</app>
+    <plsql>
+        <action>index</action>
+        <package_instance>null</package_instance>
+        <package_db>nosi.webapps.kofax.pages</package_db>
+        <package_html>Pesquisa_arquivo_pdf</package_html>
+        <table_name></table_name>
+        <with_replace>false</with_replace>
+        <with_label>false</with_label>
+        <with_biztalk>false</with_biztalk>
+        <dynamic_menu>false</dynamic_menu>
+        <copy_menu>false</copy_menu>
+        <package_copy_db />
+        <package_copy_html />
+        <preserve_url>http://localhost:8080/IGRP/webapps?r=igrp/page/preserveUrl&amp;p_id=</preserve_url>
+    </plsql>
+    <content>
+        <title>Pesquisa os arquivos pdf de acordo com um determinado input</title>
+        <form_1 type="form" xml-type="form" gen-type="container" gen-group="">
+            <fields>
+                <conteudo name="p_conteudo" type="text" maxlength="30" required="false" change="false" readonly="false" disabled="false" placeholder="Digite  alguma coisa para pesquisar o Pdf " right="false">
+                    <label>Conteúdo</label>
+                    <value>Ut voluptatem sit ipsum dolore</value>
+                </conteudo>
+            </fields>
+            <tools-bar>
+                <item type="form" code="" class="default" rel="pesquisar">
+                    <title>Pesquisar</title>
+                    <app>kofax</app>
+                    <page>Pesquisa_arquivo_pdf</page>
+                    <link>index</link>
+                    <parameter>undefinedimages/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl?</parameter>
+                    <target>_blank</target>
+                    <img>default|fa-search</img>
+                </item>
+            </tools-bar>
+        </form_1>
+        <table_1 type="table" xml-type="table" gen-type="container" gen-group="true">
+            <fields>
+                <caminho_do_arquivo name="p_caminho_do_arquivo" type="text" maxlength="30" align="left" lookup_parser="false" iskey="false">
+                    <label>Caminho do Arquivo</label>
+                </caminho_do_arquivo>
+                <tamanho_do_arquivo name="p_tamanho_do_arquivo" type="text" maxlength="30" align="left" lookup_parser="false" iskey="false">
+                    <label>Tamanho do Arquivo</label>
+                </tamanho_do_arquivo>
+                <arquivo name="p_arquivo" type="link" target="_blank" target_fields="" action="index" page="Pesquisa_arquivo_pdf" app="kofax" class="primary" btnSize="" iconColor="#333" iconClass="" img="fa-link" maxlength="30" align="left" lookup_parser="false" iskey="false" desc="true">
+                    <label>Arquivo</label>
+                </arquivo>
+            </fields>
+            <table>
+                <value>
+                    <row>
+                        <caminho_do_arquivo name="p_caminho_do_arquivo">Amet perspiciatis sed aperiam</caminho_do_arquivo>
+                        <tamanho_do_arquivo name="p_tamanho_do_arquivo">Elit lorem omnis magna volupta</tamanho_do_arquivo>
+                        <arquivo name="p_arquivo" desc="true">undefinedimages/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl</arquivo>
+                        <arquivo_desc name="p_arquivo_desc">Arquivo</arquivo_desc>
+                    </row>
+                    <row>
+                        <caminho_do_arquivo name="p_caminho_do_arquivo">Totam perspiciatis sed dolor v</caminho_do_arquivo>
+                        <tamanho_do_arquivo name="p_tamanho_do_arquivo">Consectetur ipsum omnis iste m</tamanho_do_arquivo>
+                        <arquivo name="p_arquivo" desc="true">undefinedimages/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl</arquivo>
+                        <arquivo_desc name="p_arquivo_desc">Arquivo</arquivo_desc>
+                    </row>
+                    <row>
+                        <caminho_do_arquivo name="p_caminho_do_arquivo">Sit sit magna sit laudantium</caminho_do_arquivo>
+                        <tamanho_do_arquivo name="p_tamanho_do_arquivo">Accusantium sed ipsum consecte</tamanho_do_arquivo>
+                        <arquivo name="p_arquivo" desc="true">undefinedimages/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl</arquivo>
+                        <arquivo_desc name="p_arquivo_desc">Arquivo</arquivo_desc>
+                    </row>
+                    <row>
+                        <caminho_do_arquivo name="p_caminho_do_arquivo">Sit voluptatem consectetur omn</caminho_do_arquivo>
+                        <tamanho_do_arquivo name="p_tamanho_do_arquivo">Magna mollit laudantium lorem</tamanho_do_arquivo>
+                        <arquivo name="p_arquivo" desc="true">undefinedimages/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl</arquivo>
+                        <arquivo_desc name="p_arquivo_desc">Arquivo</arquivo_desc>
+                    </row>
+                    <row>
+                        <caminho_do_arquivo name="p_caminho_do_arquivo">Totam ut sed voluptatem stract</caminho_do_arquivo>
+                        <tamanho_do_arquivo name="p_tamanho_do_arquivo">Elit voluptatem consectetur vo</tamanho_do_arquivo>
+                        <arquivo name="p_arquivo" desc="true">undefinedimages/IGRP/IGRP2.3/app/kofax/pesquisa_arquivo_pdf/Pesquisa_arquivo_pdf.xsl</arquivo>
+                        <arquivo_desc name="p_arquivo_desc">Arquivo</arquivo_desc>
+                    </row>
+                </value>
+            </table>
+        </table_1>
+        <sectionheader_1 type="sectionheader" xml-type="form" gen-type="container" gen-group="">
+            <fields>
+                <sectionheader_1_text type="text" name="p_sectionheader_1_text" persist="true" maxlength="4000">
+                    <value>
+                        <![CDATA[Pesquisa os Arquivos PDFs]]>
+                    </value>
+                </sectionheader_1_text>
+            </fields>
+        </sectionheader_1>
+    </content>
+</rows>
