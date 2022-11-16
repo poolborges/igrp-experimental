@@ -118,6 +118,7 @@ public static void build(File directory, File pom) {
 ----
 
 == Javac
+
 * com.sun.tools.javac.Main.compile
 
 [source, java]
@@ -212,6 +213,7 @@ System.out.println(instance); // Should print "test.Test@hashcode".
 ----
 
 == Reflection API 
+
 * Otherwise you need to involve the Reflection API to access 
 and invoke the (unknown) methods/fields.
 
@@ -222,26 +224,7 @@ properties.load(
     .getResourceAsStream("ClassName.properties"));
 ----
 
-== IGRP and Jetty
-[source, xml]
-----
-<plugins>
-    <!-- mvn jetty:run -->
-    <plugin>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.4.8.v20171121</version>
-        <configuration>
-            <webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
-            <loginServices>
-                <loginService implementation="org.eclipse.jetty.security.HashLoginService">
-                    <name>IGRP_ADMIN_REALM</name>
-                </loginService>
-            </loginServices>
-        </configuration>
-    </plugin>
-</plugins>
-----
+
 
 == IGRP Tools
 
@@ -290,41 +273,4 @@ cv.nosicode.igrp.tools.archetype
       <scope>provided</scope>
 </dependency>
 ----
-
-
-
-== NOSI 
-
-* 1998 
-* NOSI 
-* 2014 - EPE ()
-
-=== O que 
-* 80 ApplICAÇÕES
-* 
-* 19 ANO 
-* 12000 ESTADO 
-* 32 SALA VIDEO 
-* 9 ILHAS CONNECTAS 
-* SOF DEV, CONSULTION, DATACENTER, TELECOMUNICAÇÕES
-* 170 COLABORADORES
-
-
-=== IGRP 
-
-* SIGOV ()
-* SIM (AUTORQUIA)
-* RMI (REGISTO NACIONA IDEN)
-* CASA CIDADAO
-** CERTIFICADO, EMPRESA DIA, PASSPORT
-* SIGE (Sistema Integrado de Gestão Escolar.)
-* Connect 
-** 122 PRAÇAS DI
-* SIS (SISTEMA INEGRADO Saude)
-* SIE (SISTEMA INTEGRADO DE Ele)
-
-=== DATACENTER
-
-* 7 NIVEIS DE SECUGURANÇA
-
 
